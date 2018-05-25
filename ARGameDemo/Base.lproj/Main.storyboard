@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="ARGameDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qQ8-aM-y2k">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAq-Wp-J0A">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fqd-iv-exh">
+                                <rect key="frame" x="167" y="617" width="40" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="5MK-0r-tfJ"/>
+                                </constraints>
+                                <state key="normal" title="ADD"/>
+                                <connections>
+                                    <action selector="didTouchAddButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="azT-Bp-Ii8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gAq-Wp-J0A" firstAttribute="leading" secondItem="MFA-nX-M5P" secondAttribute="leading" id="5i8-yt-Rbg"/>
+                            <constraint firstItem="MFA-nX-M5P" firstAttribute="bottom" secondItem="Fqd-iv-exh" secondAttribute="bottom" constant="20" id="Fbf-7x-MIB"/>
+                            <constraint firstItem="gAq-Wp-J0A" firstAttribute="top" secondItem="qQ8-aM-y2k" secondAttribute="top" id="ObT-b5-EZQ"/>
+                            <constraint firstItem="Fqd-iv-exh" firstAttribute="centerX" secondItem="qQ8-aM-y2k" secondAttribute="centerX" id="fYw-np-dne"/>
+                            <constraint firstItem="gAq-Wp-J0A" firstAttribute="bottom" secondItem="MFA-nX-M5P" secondAttribute="bottom" id="udL-Yo-EKd"/>
+                            <constraint firstItem="gAq-Wp-J0A" firstAttribute="trailing" secondItem="MFA-nX-M5P" secondAttribute="trailing" id="zZH-dr-Sm9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MFA-nX-M5P"/>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="gAq-Wp-J0A" id="BDj-Up-3aW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "PlaneNode.init(with:):PlaneNode.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "anchor.extent.z">
+            </PersistentString>
+            <PersistentString
+               value = "anchor.extent.x">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.renderer(_:didAdd:for:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "plane">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
