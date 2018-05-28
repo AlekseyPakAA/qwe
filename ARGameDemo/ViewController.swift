@@ -41,6 +41,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let configuration = ARWorldTrackingConfiguration()
 		configuration.planeDetection = .horizontal
 
+		sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
+
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -121,6 +123,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 		let geometry = SCNSphere(radius: 0.05)
 		transform.columns.3.y += Float(geometry.radius)
 
+		let material: SCNMaterial = {
+			let material = SCNMaterial()
+			let image = UIImage(named: "abstract")
+			material.diffuse.contents = image
+			return material
+		}()
+		geometry.materials = [material]
+
 		let node = SCNNode(geometry: geometry)
 
 		let shape = SCNPhysicsShape(geometry: geometry, options: nil)
@@ -130,6 +140,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 		setTransform(transform, relativeTo: cameraTransform, to: node)
 
 		sceneView.scene.rootNode.addChildNode(node)
+
 	}
 
     func session(_ session: ARSession, didFailWithError error: Error) {
