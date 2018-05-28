@@ -6,10 +6,13 @@
          contextName = "PlaneNode.init(with:):PlaneNode.swift">
          <PersistentStrings>
             <PersistentString
-               value = "anchor.extent.z">
+               value = "anchor.extent.x">
             </PersistentString>
             <PersistentString
-               value = "anchor.extent.x">
+               value = "anchor.center.x">
+            </PersistentString>
+            <PersistentString
+               value = "anchor.extent.z">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

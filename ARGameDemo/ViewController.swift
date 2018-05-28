@@ -14,16 +14,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
 
-	fileprivate var cameraVector: (SCNVector3, SCNVector3) { // (direction, position)
-		if let frame = self.sceneView.session.currentFrame {
-			let mat = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
-			let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33) // orientation of camera in world space
-			let pos = SCNVector3(mat.m41, mat.m42, mat.m43) // location of camera in world space
-
-			return (dir, pos)
-		}
-		return (SCNVector3(0, 0, 0), SCNVector3(0, 0, 0))
-	}
+	var planes = [UUID: PlaneNode]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,26 +71,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 */
 
 	func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-		// Place content only for anchors found by plane detection.
 		guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-
 		let plane = PlaneNode(with: planeAnchor)
+		planes[planeAnchor.identifier] = plane
+
 		node.addChildNode(plane)
 	}
 
 	func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-		// Update content only for plane anchors and nodes matching the setup created in `renderer(_:didAdd:for:)`.
-		guard let planeAnchor = anchor as?  ARPlaneAnchor,
-			let planeNode = node.childNodes.first,
-			let plane = planeNode.geometry as? SCNPlane
-			else { return }
+		guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+		guard let plane = planes[anchor.identifier] else { return }
 
-		// Plane estimation may shift the center of a plane relative to its anchor's transform.
-		planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
-
-		// Plane estimation may also extend planes, or remove one plane to merge its extent into another.
-		plane.width = CGFloat(planeAnchor.extent.x)
-		plane.height = CGFloat(planeAnchor.extent.z)
+		plane.update(with: planeAnchor)
 	}
 
 	/**
@@ -142,7 +125,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
 		let shape = SCNPhysicsShape(geometry: geometry, options: nil)
 		node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-		node.physicsBody?.isAffectedByGravity = false
+		node.physicsBody?.isAffectedByGravity = true
 
 		setTransform(transform, relativeTo: cameraTransform, to: node)
 

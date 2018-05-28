@@ -11,6 +11,24 @@ import ARKit
 
 class PlaneNode: SCNNode {
 
+//	// Place content only for anchors found by plane detection.
+//
+//	// Create a SceneKit plane to visualize the plane anchor using its position and extent.
+//	let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+//	let planeNode = SCNNode(geometry: plane)
+//	planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
+//
+//	// `SCNPlane` is vertically oriented in its local coordinate space, so
+//	// rotate the plane to match the horizontal orientation of `ARPlaneAnchor`.
+//	planeNode.eulerAngles.x = -.pi / 2
+//
+//	// Make the plane visualization semitransparent to clearly show real-world placement.
+//	planeNode.opacity = 0.25
+//
+//	// Add the plane visualization to the ARKit-managed node so that it tracks
+//	// changes in the plane anchor as plane estimation continues.
+//	node.addChildNode(planeNode)
+
 	let anchor: ARPlaneAnchor
 	let planeGeometry: SCNPlane
 
@@ -27,20 +45,30 @@ class PlaneNode: SCNNode {
 			return material
 		}()
 		planeGeometry.materials = [material]
+		self.geometry = planeGeometry
 
-		let planeNode = SCNNode(geometry: geometry)
-		planeNode.position = SCNVector3(anchor.center.x, 0, anchor.center.z)
-  		planeNode.transform = SCNMatrix4MakeRotation(-.pi / 2.0, 1.0, 0.0, 0.0);
+		simdPosition = float3(anchor.center.x, 0, anchor.center.z)
+		eulerAngles.x = -.pi / 2
+
+		opacity = 1.00
+
+		let shape = SCNPhysicsShape(node: self, options: nil)
+		physicsBody = SCNPhysicsBody(type: .kinematic, shape: shape)
+		physicsBody?.isAffectedByGravity = true
 
 		setTextureScale()
-		addChildNode(planeNode)
 	}
 
 	func update(with anchor: ARPlaneAnchor) {
 		planeGeometry.width = CGFloat(anchor.extent.x)
 		planeGeometry.height = CGFloat(anchor.extent.z)
 
-		position = SCNVector3(anchor.center.x, 0, anchor.center.z)
+		simdPosition = float3(anchor.center.x, 0, anchor.center.z)
+
+		let shape = SCNPhysicsShape(node: self, options: nil)
+		physicsBody = SCNPhysicsBody(type: .kinematic, shape: shape)
+		physicsBody?.isAffectedByGravity = true
+		
 		setTextureScale()
 	}
 
